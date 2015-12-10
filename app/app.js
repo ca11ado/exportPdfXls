@@ -24,8 +24,9 @@ app.get('*', (req, res) => {
 
 app.listen(3000);
 
-function exportMiddleware (res, req, next) {
+function exportMiddleware (req, res, next) {
   outputMessage += 'Test Middlewawre>>>\n';
   downLoadFlag = true;
-  next();
+  res.send('Here is my middleware');
+  //next();
 }
