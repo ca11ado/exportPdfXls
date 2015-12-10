@@ -7,17 +7,25 @@ require('babel-register');
 let express = require('express');
 let app = express();
 
-let ouputMessage = 'Root>>>\n';
+let downLoadFlag = false;
+let outputMessage = 'Root>>>\n';
 
-app.use('/api', (req, res, next) => {
-  ouputMessage += 'Test Middlewawre>>>\n';
-  next();
-});
+app.use('/api', exportMiddleware);
 
 app.get('*', (req, res) => {
-  ouputMessage += 'Get>>>>';
-  res.send(ouputMessage);
-  ouputMessage = 'Root>>>';
+  outputMessage += 'Get>>>>';
+
+  res.send(outputMessage);
+
+  //clear
+  outputMessage = 'Root>>>';
+  downLoadFlag = false;
 });
 
 app.listen(3000);
+
+function exportMiddleware (res, req, next) {
+  outputMessage += 'Test Middlewawre>>>\n';
+  downLoadFlag = true;
+  next();
+}
