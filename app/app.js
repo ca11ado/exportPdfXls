@@ -26,6 +26,11 @@ function exportMiddleware (req, res, next) {
 
   console.log(req.params.org);
 
-  res.set('Content-Type', 'application/pdf');
-  res.send('Here is my middleware');
+  switch (req.params.org) {
+    case '2gis':
+      res.send('Hello, 2gis');
+      break;
+    default:
+      next();
+  }
 }
