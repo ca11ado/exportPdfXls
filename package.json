@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-register": "^6.3.13",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "xlsx-template": "*"
   }
 }
