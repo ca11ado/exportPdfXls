@@ -4,6 +4,7 @@
 'use strict';
 require('babel-register');
 
+let exportMiddleware = require('./export-middleware');
 let express = require('express');
 let app = express();
 
@@ -20,17 +21,3 @@ app.get('*', (req, res) => {
 });
 
 app.listen(3000);
-
-function exportMiddleware (req, res, next) {
-  outputMessage += 'Test Middleware>>>\n';
-
-  console.log(req.params.org);
-
-  switch (req.params.org) {
-    case '2gis':
-      res.send('Hello, 2gis');
-      break;
-    default:
-      next();
-  }
-}
