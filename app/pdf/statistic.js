@@ -46,6 +46,8 @@ function statisticaMaket(res) {
   }
   createTable(doc, dataForTable, colX, colW);
 
+
+
   doc.end();
 
   return stream;

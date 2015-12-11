@@ -1,18 +1,16 @@
 'use strict';
 
 function createPdfTable(doc, table, columnX, columnWidth) {
-  table = table || [
-    [ 'column1', 'df sfewf wef sdf jefljwef jsdjkf jewlfj wekjf lsdjkfj weklfj ewjf sj', 'column3'],
-    [ 'column1', 'column2', 'column3'],
-    [ 'column1', 'column2', 'column3']
-  ];
-
+  if (!table) throw new Error('No table');
   if (!columnX || !Array.isArray(columnX) || table[0].length != columnX.length) throw Error('No or wrong data for x positions of columns'); //todo придумать дефолтный автомат
   if (!columnWidth || !Array.isArray(columnWidth) || table[0].length != columnWidth.length) throw Error('No or wrong data for width of columns'); //todo придумать дефолтный автомат
 
   doc.lineGap(10);
 
-  table.map((tr) => {
+
+  doc.fillColor('black', 1);
+  table.map((tr, ind) => {
+    let rectY = doc.y;
     doc.moveDown();
     tr.map((td, index) => {
       if (index != 0 || index != tr.length) {
@@ -22,7 +20,15 @@ function createPdfTable(doc, table, columnX, columnWidth) {
     });
 
     // rectangle
-    //doc.rect().stroke(); //todo rectangle for row
+
+    if (ind == 0) {
+      doc.rect(5, rectY, doc.page.width - 10, doc.y - rectY).fillOpacity(0.1).fillAndStroke('yellow');
+
+      doc.fillColor('black', 1);
+    } else {
+      doc.rect(5, rectY, doc.page.width - 10, doc.y - rectY).stroke();
+    }
+
   });
 
   doc.lineGap(0);
