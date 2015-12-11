@@ -1,20 +1,16 @@
 'use strict';
 
-function createPdfTable(doc) {
-  let table = [
+function createPdfTable(doc, table, columnX, columnWidth) {
+  table = table || [
     [ 'column1', 'df sfewf wef sdf jefljwef jsdjkf jewlfj wekjf lsdjkfj weklfj ewjf sj', 'column3'],
     [ 'column1', 'column2', 'column3'],
     [ 'column1', 'column2', 'column3']
   ];
 
-  let columnX = [10, 110, 210];
+  if (!columnX || !Array.isArray(columnX) || table[0].length != columnX.length) throw Error('No or wrong data for x positions of columns'); //todo придумать дефолтный автомат
+  if (!columnWidth || !Array.isArray(columnWidth) || table[0].length != columnWidth.length) throw Error('No or wrong data for width of columns'); //todo придумать дефолтный автомат
 
-  doc.text('Hello, here will be the table');
-
-  doc
-    .moveDown()
-    .moveDown()
-    .moveDown();
+  doc.lineGap(10);
 
   table.map((tr) => {
     doc.moveDown();
@@ -22,9 +18,11 @@ function createPdfTable(doc) {
       if (index != 0 || index != tr.length) {
         doc.moveUp();
       }
-      doc.text(td, columnX[index], doc.y, { width: 80 });
+      doc.text(td, columnX[index], doc.y, { width: columnWidth[index] });
     });
   });
+
+  doc.lineGap(0);
 
 }
 

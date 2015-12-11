@@ -10,7 +10,7 @@ let exportMiddleware = require('./export-middleware');
 let express = require('express');
 let app = express();
 
-let statisticaPdf = require('./pdf/statistica');
+let statisticaPdf = require('./pdf/statistic');
 
 let outputMessage = 'Root>>>\n';
 let stream;
