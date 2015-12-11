@@ -6,31 +6,20 @@ require('babel-register');
 
 let PDFDocument = require('pdfkit');
 
-let fs = require('fs');
-
 let exportMiddleware = require('./export-middleware');
 let express = require('express');
 let app = express();
 
+let statisticaPdf = require('./pdf/statistica');
+
 let outputMessage = 'Root>>>\n';
 let stream;
-let createTable = require('./createPdfTable');
 
 app.use('/api/:org', exportMiddleware);
 
 app.get('/pdf', (req, res) => {
-  let doc = new PDFDocument({
-    layout: 'landscape'
-  });
-  doc.font('Times-Roman');
 
-  stream = doc.pipe(res);
-
-  doc.text('Hello');
-
-  createTable(doc);
-
-  doc.end();
+  stream = statisticaPdf(res);
 
   stream.on('finish', () => {
     res.send();
