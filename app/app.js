@@ -24,7 +24,7 @@ app.get('/pdf', (req, res) => {
   });
   doc.font('Times-Roman');
 
-  stream = doc.pipe(fs.createWriteStream('./app/export/output.pdf'));
+  stream = doc.pipe(res);
 
   doc.text('Hello');
 
@@ -33,7 +33,7 @@ app.get('/pdf', (req, res) => {
   doc.end();
 
   stream.on('finish', () => {
-    res.download('./app/export/output.pdf');
+    res.send();
   });
 });
 
