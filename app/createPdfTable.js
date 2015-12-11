@@ -20,6 +20,9 @@ function createPdfTable(doc, table, columnX, columnWidth) {
       }
       doc.text(td, columnX[index], doc.y, { width: columnWidth[index] });
     });
+
+    // rectangle
+    //doc.rect().stroke(); //todo rectangle for row
   });
 
   doc.lineGap(0);
