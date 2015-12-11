@@ -5,7 +5,8 @@
 require('babel-register');
 
 let PDFDocument = require('pdfkit');
-let doc = new PDFDocument();
+
+let fs = require('fs');
 
 let exportMiddleware = require('./export-middleware');
 let express = require('express');
@@ -13,15 +14,26 @@ let app = express();
 
 let outputMessage = 'Root>>>\n';
 let stream;
+let createTable = require('./createPdfTable');
 
 app.use('/api/:org', exportMiddleware);
 
 app.get('/pdf', (req, res) => {
-  stream = doc.pipe(res);
+  let doc = new PDFDocument({
+    layout: 'landscape'
+  });
+  doc.font('Times-Roman');
+
+  stream = doc.pipe(fs.createWriteStream('./app/export/output.pdf'));
+
   doc.text('Hello');
+
+  createTable(doc);
+
   doc.end();
+
   stream.on('finish', () => {
-    res.send();
+    res.download('./app/export/output.pdf');
   });
 });
 
