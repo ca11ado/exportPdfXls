@@ -11,6 +11,7 @@ let express = require('express');
 let app = express();
 
 let statisticaPdf = require('./pdf/statistic');
+let getAsyncData = require('./getAsyncData');
 
 let outputMessage = 'Root>>>\n';
 let stream;
@@ -19,11 +20,17 @@ app.use('/api/:org', exportMiddleware);
 
 app.get('/pdf', (req, res) => {
 
-  stream = statisticaPdf(res);
+  getAsyncData()
+    .then( data => {
+      stream = statisticaPdf(res, data);
 
-  stream.on('finish', () => {
-    res.send();
-  });
+      stream.on('finish', () => {
+        res.send();
+      });
+    })
+    .catch( err => {
+      console.log(`some error with getting async data ${err}`);
+    });
 });
 
 app.get('*', (req, res) => {

@@ -4,14 +4,7 @@ let PDFDocument = require('pdfkit');
 let createTable = require('../createPdfTable');
 let path = require('path');
 
-let dataForTable = [
-  ['Период', 'Показы', 'Клики', 'CTR', 'Звонки', 'Переходы на сайт', 'Клики в адрес', 'Переходы в соцсети'],
-  ['Январь 2014', 1157, 77, '6.66%', 5, 13, '-', '-'],
-  ['Февраль 2014', 1890, 189, '2.28%', 17, 16, '-', '-'],
-  ['Март 2014', 2289, 56, '1.8%', 190, 82, '-', '-']
-];
-
-function statisticaMaket(res) {
+function statisticaMaket(res, data) {
   let stream;
   let doc = new PDFDocument({
     layout: 'landscape',
@@ -44,7 +37,7 @@ function statisticaMaket(res) {
   for (let i=0; i<colW.length; i++) {
     colW[i] = 90;
   }
-  createTable(doc, dataForTable, colX, colW);
+  createTable(doc, data, colX, colW);
 
 
 
