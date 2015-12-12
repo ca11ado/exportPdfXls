@@ -12,6 +12,7 @@
     "babel-register": "^6.3.13",
     "express": "^4.13.3",
     "pdfkit": "^0.7.1",
+    "request": "^2.67.0",
     "xlsx-template": "*"
   }
 }

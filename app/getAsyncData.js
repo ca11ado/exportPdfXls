@@ -1,18 +1,26 @@
 'use strict';
 
+let request = require('request');
+let result;
+
 function getAsyncData() {
 
-  let result = new Promise((resolve, reject) => {
+  result = new Promise((resolve, reject) => {
 
     //запрос к апи
-    let dataForTable = [
-      ['Период', 'Показы', 'Клики', 'CTR', 'Звонки', 'Переходы на сайт', 'Клики в адрес', 'Переходы в соцсети'],
-      ['Январь 2014', 1157, 77, '6.66%', 5, 13, '-', '-'],
-      ['Февраль 2014', 1890, 189, '2.28%', 17, 16, '-', '-'],
-      ['Март 2014', 2289, 56, '1.8%', 190, 82, '-', '-']
-    ];
+    request('http://localhost:8888', function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        try {
+          let data = JSON.parse(body);
+          resolve(data);
+        } catch (e) {
+          throw Error(`Parsing error ${e}`);
+        }
 
-    resolve(dataForTable);
+      } else {
+        throw Error(error);
+      }
+    });
   });
 
   return result;

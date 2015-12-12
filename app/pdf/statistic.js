@@ -17,7 +17,7 @@ function statisticaMaket(res, data) {
   let headerXY = {x: doc.x, y: doc.y};
   doc.fontSize(20);
   doc.image(path.join(__dirname, 'img/logo.png'));
-  doc.text('10 Авеню, школа танцев, Новосибирск', headerXY.x, headerXY.y, {
+  doc.text(data.address, headerXY.x, headerXY.y, {
     align: 'right'
   });
   doc.fontSize(12);
@@ -37,7 +37,7 @@ function statisticaMaket(res, data) {
   for (let i=0; i<colW.length; i++) {
     colW[i] = 90;
   }
-  createTable(doc, data, colX, colW);
+  createTable(doc, data.table, colX, colW);
 
 
 
