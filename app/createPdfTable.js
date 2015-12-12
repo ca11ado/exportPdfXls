@@ -22,7 +22,7 @@ function createPdfTable(doc, table, columnX, columnWidth) {
     // rectangle
 
     if (ind == 0) {
-      doc.rect(5, rectY, doc.page.width - 10, doc.y - rectY).fillOpacity(0.1).fillAndStroke('yellow');
+      doc.rect(5, rectY, doc.page.width - 10, doc.y - rectY).fillOpacity(0.1).fillAndStroke();
 
       doc.fillColor('black', 1);
     } else {
