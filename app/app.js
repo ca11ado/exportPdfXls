@@ -12,30 +12,10 @@ let app = express();
 
 let http = require('http');
 
-let statisticaPdf = require('./pdf/statistic');
-let getAsyncData = require('./getAsyncData');
-
-let stream;
-
 app.use('/api/:org', exportMiddleware);
 
-app.get('/pdf', (req, res) => {
-
-  getAsyncData()
-    .then( data => {
-      stream = statisticaPdf(res, data);
-      stream.on('finish', () => {
-        res.send();
-      });
-    })
-    .catch( err => {
-      console.log(`some error with getting async data ${err}`);
-    });
-});
-
-
 app.get('*', (req, res) => {
-  res.send('Get >>>>');
+  res.send('Hi there!');
 });
 
 app.listen(3000);
@@ -48,13 +28,13 @@ let dataForTable = [
   ['Февраль 2014', 1890, 189, '2.28%', 17, 16, '-', '-'],
   ['Март 2014', 2289, 56, '1.8%', 190, 82, '-', '-']
 ];
-let dataForApi = {
+let dataFromApi = {
   address: '10 Авеню, школа танцев, Новосибирск',
   table: dataForTable
 };
 
-http.createServer(function(request, response) {
-  response.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
-  response.write(JSON.stringify(dataForApi));
-  response.end();
+http.createServer(function(req, res) {
+  res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
+  res.write(JSON.stringify(dataFromApi));
+  res.end();
 }).listen(8888);
