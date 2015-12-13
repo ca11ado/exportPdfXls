@@ -7,6 +7,8 @@ let statisticaPdf = require('./pdf/statistic');
 let xlsxTemplate = require('xlsx-template');
 let stream;
 
+let prepareTableForPlaceholders = require('./xls/prepareValuesForPlaceholders');
+
 function exportMiddleware (req, res, next) {
   let query = req.query;
   let param = req.params.org;
@@ -25,24 +27,21 @@ function exportMiddleware (req, res, next) {
         });
       break;
     case 'xls':
-      fs.readFile(path.join(__dirname, 'xls/templates', 'simple3-template.xlsx'), function(err, data) {
+      fs.readFile(path.join(__dirname, 'xls/templates', '2gis-statistic.xlsx'), function(err, data) {
         var t = new xlsxTemplate(data);
-        t.substitute("Tables", {
-          ages: [
-            {name: "John", age: 10},
-            {name: "Bill", age: 12}
-          ],
-          days: ["Monday", "Tuesday", "Wednesday"],
-          hours: [
-            {name: "Bob", days: [10, 20, 30]},
-            {name: "Jim", days: [12, 24, 36]}
-          ],
-          progress: 100
-        });
-
-        var newData = t.generate();
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
-        res.send(new Buffer(newData, 'binary'));
+        getAsyncData()
+          .then( data => {
+            t.substitute("Tables", {
+              address: data.address,
+              table: prepareTableForPlaceholders(data.table)
+            });
+            var newData = t.generate();
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
+            res.send(new Buffer(newData, 'binary'));
+          })
+          .catch( err => {
+            console.log(`some error with getting async data ${err}`);
+          });
       });
       break;
     default:
