@@ -3,7 +3,7 @@
 let fs = require('fs');
 let path = require('path');
 let getAsyncData = require('./getAsyncData');
-let statisticaPdf = require('./pdf/statistic');
+let statisticaPdf = require('./pdf/createPdfPage');
 let xlsxTemplate = require('xlsx-template');
 let stream;
 

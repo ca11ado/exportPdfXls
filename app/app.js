@@ -4,13 +4,13 @@
 'use strict';
 require('babel-register');
 
-let PDFDocument = require('pdfkit');
-
+let http = require('http');
 let exportMiddleware = require('./export-middleware');
 let express = require('express');
-let app = express();
 
-let http = require('http');
+
+//# Middleware for export
+let app = express();
 
 app.use('/api/:org', exportMiddleware);
 
@@ -21,7 +21,7 @@ app.get('*', (req, res) => {
 app.listen(3000);
 
 
-// API
+//# Data API
 let dataForTable = [
   ['Период', 'Показы', 'Клики', 'CTR', 'Звонки', 'Переходы на сайт', 'Клики в адрес', 'Переходы в соцсети'],
   ['Январь 2014', 1157, 77, '6.66%', 5, 13, '-', '-'],

@@ -1,7 +1,7 @@
 'use strict';
 
 let PDFDocument = require('pdfkit');
-let createTable = require('../createPdfTable');
+let createTable = require('./createPdfTable');
 let path = require('path');
 
 function statisticaMaket(res, data) {
@@ -22,8 +22,6 @@ function statisticaMaket(res, data) {
   });
   doc.fontSize(12);
 
-  //console.log(doc.options.margin);
-
   doc
     .moveDown()
     .moveDown()
@@ -38,8 +36,6 @@ function statisticaMaket(res, data) {
     colW[i] = 90;
   }
   createTable(doc, data.table, colX, colW);
-
-
 
   doc.end();
 
