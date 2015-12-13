@@ -28,11 +28,11 @@ function statisticaMaket(res, data) {
   //### TABLE
   const COLUMN_WIDTH = 90;
 
-  let colXposition = new Array(8);
+  let colXposition = new Array(data.table[0].length);
   for (let i=0; i<colXposition.length; i++) {
     colXposition[i] = colXposition[i-1] ? colXposition[i-1] + COLUMN_WIDTH + 10 : 5;
   }
-  let colWidth = new Array(8);
+  let colWidth = new Array(data.table[0].length);
   for (let i=0; i<colWidth.length; i++) {
     colWidth[i] = COLUMN_WIDTH;
   }
