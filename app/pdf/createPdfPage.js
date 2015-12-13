@@ -23,11 +23,7 @@ function statisticaMaket(res, data) {
   doc.fontSize(12);
 
   doc
-    .moveDown()
-    .moveDown()
-    .moveDown()
-    .moveDown()
-    .moveDown();
+    .moveDown(5);
 
   //### TABLE
   const COLUMN_WIDTH = 90;
