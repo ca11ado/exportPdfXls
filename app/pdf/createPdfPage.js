@@ -13,7 +13,7 @@ function statisticaMaket(res, data) {
   doc.font(path.join(__dirname, 'fonts/9575.ttf'));
   stream = doc.pipe(res);
 
-  //*** HEADER
+  //### HEADER
   let headerXY = {x: doc.x, y: doc.y};
   doc.fontSize(20);
   doc.image(path.join(__dirname, 'img/logo.png'));
@@ -29,16 +29,20 @@ function statisticaMaket(res, data) {
     .moveDown()
     .moveDown();
 
-  //*** TABLE
-  let colX = [5, 105, 205, 305, 405, 505, 605, 705];
-  let colW = new Array(8);
-  for (let i=0; i<colW.length; i++) {
-    colW[i] = 90;
+  //### TABLE
+  const COLUMN_WIDTH = 90;
+
+  let colXposition = new Array(8);
+  for (let i=0; i<colXposition.length; i++) {
+    colXposition[i] = colXposition[i-1] ? colXposition[i-1] + COLUMN_WIDTH + 10 : 5;
   }
-  createTable(doc, data.table, colX, colW);
+  let colWidth = new Array(8);
+  for (let i=0; i<colWidth.length; i++) {
+    colWidth[i] = COLUMN_WIDTH;
+  }
+  createTable(doc, data.table, colXposition, colWidth);
 
   doc.end();
-
   return stream;
 }
 
