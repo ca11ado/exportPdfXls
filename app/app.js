@@ -8,20 +8,28 @@ let http = require('http');
 let exportMiddleware = require('./export-middleware');
 let express = require('express');
 
+let config = {
+  exportPort: 3000,
+  apiPort: 8888,
+  middlewareBaseUrl: '/api/:org'
+};
 
-//# Middleware for export
+
+
+
+//### Middleware for export
 let app = express();
 
-app.use('/api/:org', exportMiddleware);
+app.use(config.middlewareBaseUrl, exportMiddleware);
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hi there!');
 });
 
-app.listen(3000);
+app.listen(config.exportPort);
 
 
-//# Data API
+//### Data API
 let dataForTable = [
   ['Период', 'Показы', 'Клики', 'CTR', 'Звонки', 'Переходы на сайт', 'Клики в адрес', 'Переходы в соцсети'],
   ['Январь 2014', 1157, 77, '6.66%', 5, 13, '-', '-'],
@@ -37,4 +45,4 @@ http.createServer(function(req, res) {
   res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
   res.write(JSON.stringify(dataFromApi));
   res.end();
-}).listen(8888);
+}).listen(config.apiPort);
